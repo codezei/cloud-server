@@ -20,13 +20,13 @@ class FileController {
             if (!parentFile) {
                 file.path = name
                 //путь будет отличаться в зависимости был ли найден родительский файл
-                await fileService.createDir(req, file)
+                await fileService.createDir(file)
                 //если родительский файл не был найдет, то файл будет добавлен в корневую директорию. Поэтому в поле path только имя файла и сразу е создаем директирою
             } else {
                 //если родительский файл был найден
                 file.path = `${parentFile.path}\\${file.name}`
                 // то сначала добавляем родительский путь + имя файла
-                await fileService.createDir(req, file)
+                await fileService.createDir(file)
                 //создаем директорию и в массив родительского файла пушим id только что созданного нового файла, так как он будет являтся по отношению к родительскому файлу - дочерним
                 parentFile.childs.push(file._id)
                 await parentFile.save()
@@ -78,7 +78,6 @@ class FileController {
     async searchFiles(req, res) {
         try {
             const search = req.query.search
-            console.log(search)
 
             const files = await File.find({user: req.user.id})
             
@@ -110,9 +109,9 @@ class FileController {
             let path
 
             if (parent) {
-                path = `${req.filePath}\\${user._id}\\${parent.path}\\${file.name}`
+                path = `${config.get('filePath')}\\${user._id}\\${parent.path}\\${file.name}`
             } else {
-                path = `${req.filePath}\\${user._id}\\${file.name}`
+                path = `${config.get('filePath')}\\${user._id}\\${file.name}`
             }
             if (fs.existsSync(path)) {
                 return res.status(400).json({message: "File already exist"})
@@ -154,7 +153,7 @@ class FileController {
 
             const file = await File.findOne({_id: req.query.id, user: req.user.id })
             // const path = `${config.get('filePath')}\\${req.user.id}\\${file.path}\\${file.name}`
-            const path = fileService.getPath(req, file)
+            const path = fileService.getPath(file)
             if (fs.existsSync(path)) {
                 return res.download(path, file.name)
             }
@@ -171,7 +170,7 @@ class FileController {
             if (!file) {
                 return res.status(400).json({message: "File not found"})
             }
-            fileService.deleteFile(req, file)
+            fileService.deleteFile(file)
             await file.remove()
             return res.json({message: "File was deleted"})
         } catch(e) {

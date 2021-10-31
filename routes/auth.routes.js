@@ -37,7 +37,7 @@ router.post('/registration', [
 
         //после того как пользователь был сохранен вбазе данных создаем дл него отдельную папку название у которой будет id пользователя
 
-        await fileService.createDir(req, new File({
+        await fileService.createDir(new File({
             user: user.id,
             name: ""
         }))

@@ -3,8 +3,8 @@ const File = require('../models/File')
 const config = require("config")
 
 class FileService {
-    createDir(req, file) {
-        const filePath = this.getPath(req, file)
+    createDir(file) {
+        const filePath = this.getPath(file)
         //первая часть это путь к папке files
         //вторая часть это название папки по id пользователя, которая будет созданная для каждого
         //file.path ???это отностильеный путь файла. Если этот файл находиться в корневой папке то этот путь будет пустым
@@ -23,8 +23,8 @@ class FileService {
             }
         })
     }
-    deleteFile(req, file) {
-        const path = this.getPath(req, file)
+    deleteFile(file) {
+        const path = this.getPath(file)
 
         if (file.type === 'dir') {
             fs.rmdirSync(path)
@@ -32,8 +32,8 @@ class FileService {
             fs.unlinkSync(path)
         }
     }
-    getPath(req, file) {
-        return `${req.filePath}\\${file.user}\\${file.path}`
+    getPath(file) {
+        return `${config.get('filePath')}\\${file.user}\\${file.path}`
     }
 }
 
