@@ -14,7 +14,6 @@ const PORT = process.env.PORT || config.get('serverPort')
 
 app.use(corsMiddleware)
 app.use(filePathMiddleware(path.resolve(__dirname, 'files')))
-app.use(filePathMiddleware(path.resolve(__dirname, 'static')))
 app.use(express.json())
 app.use(express.static('static'))
 app.use(fileUpload({}))
