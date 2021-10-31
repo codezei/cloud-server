@@ -1,7 +1,0 @@
-{
-    "serverPort": 5000,
-    "dbUrl": "mongodb+srv://adminUser:Dh2bUSrLCyrX5@cloud.mxxea.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    "secretKey": "cloud-secret-key",
-    "filePath": "D:\\Study\\Projects\\cloud\\server\\files",
-    "staticPath": "D:\\Study\\Projects\\cloud\\server\\static"
-}
