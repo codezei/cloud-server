@@ -26,7 +26,7 @@ router.post('/registration', [
         const candidate = await User.findOne({email})
 
         if (candidate) {
-            return res.status(400).json({message: `User with email ${email} already exist`})
+            return res.status(400).json({message: `User with email ${email} is already exist`})
         }
 
         let hashPassword = await bcrypt.hash(password, 10)

@@ -1,15 +1,6 @@
-# Файлы и папки операционной системы
-.DS_Store
-Thumbs.db
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Файлы редактора
-.idea
-*.sublime*
-.vscode
-
-# Вспомогательные файлы
-*.log*
-node_modules/
-
-# Папка с собранными файлами проекта
-build/
+# dependencies
+node_modules
+static
+files
